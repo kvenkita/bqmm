@@ -5,19 +5,26 @@ regression via the asymmetric Laplace working likelihood and Stan.
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note
+0 errors | 0 warnings | 3 notes
 
-* Note (CRAN incoming feasibility): "New submission", and the package URLs
-  (https://github.com/kvenkita/bqmm and https://kvenkita.github.io/bqmm/) are
-  reported as not yet reachable. These become live when the repository and its
-  GitHub Pages site are published alongside this submission.
-* Packages that pre-compile Stan models may also raise an installed-size note;
-  this is expected and matches rstanarm and brms.
-* GNU make is a SystemRequirement, declared in DESCRIPTION (inherited from the
-  rstan/StanHeaders toolchain).
-* The package compiles with the standard rstantools-generated `src/Makevars`
-  (verified by a clean `R CMD INSTALL` with no user Makevars); no non-portable
-  compiler flags are shipped.
+* Note (CRAN incoming feasibility): "New submission". The package URLs
+  (https://github.com/kvenkita/bqmm and https://kvenkita.github.io/bqmm/) become
+  live when the repository and its GitHub Pages site are published alongside this
+  submission.
+* Note: "unable to verify current time" -- a transient network/clock check on
+  the build machine, unrelated to the package.
+* Note: a few examples run for more than 5 seconds. These are the multi-quantile
+  methods (`coef`/`summary`/`plot` for `bqmm_multi`), whose examples each fit
+  more than one Markov chain Monte Carlo model with Stan; the cost is inherent to
+  the method and comparable to other Stan-based packages (e.g. rstanarm, brms).
+  All such examples are wrapped in `\donttest{}`.
+
+A note on installed size may also appear: the package pre-compiles Stan models,
+so the compiled `libs/` directory dominates, as for rstanarm and brms. The
+package builds with the standard rstantools-generated `src/Makevars` (verified by
+a clean `R CMD INSTALL` with no user Makevars); no non-portable compiler flags
+are shipped. GNU make is declared in SystemRequirements (inherited from the
+rstan/StanHeaders toolchain).
 
 ## Test environments
 

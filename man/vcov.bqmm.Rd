@@ -4,13 +4,21 @@
 \alias{vcov.bqmm}
 \title{Variance-covariance of the fixed effects}
 \usage{
-\method{vcov}{bqmm}(object, adjusted = TRUE, ...)
+\method{vcov}{bqmm}(object, adjusted = TRUE, method = c("ywh", "ij"), cluster = TRUE, ...)
 }
 \arguments{
 \item{object}{A \code{bqmm} fit.}
 
-\item{adjusted}{Logical; if \code{TRUE} (default) return the Yang-Wang-He
-corrected covariance, otherwise the naive posterior covariance.}
+\item{adjusted}{Logical; if \code{TRUE} (default) return a misspecification-
+corrected covariance (chosen by \code{method}), otherwise the naive posterior
+covariance.}
+
+\item{method}{Correction to use when \code{adjusted = TRUE}: \code{"ywh"} (default) is
+the Yang-Wang-He posterior-covariance sandwich
+(\code{\link[=compute_ywh_multiplicative]{compute_ywh_multiplicative()}}); \code{"ij"} is the Infinitesimal Jackknife
+(\code{\link[=ij_vcov]{ij_vcov()}}). Both are cluster-robust by default for a mixed model.}
+
+\item{cluster}{Logical; use the cluster-robust form (default \code{TRUE}).}
 
 \item{...}{Unused.}
 }
@@ -19,4 +27,11 @@ A K x K covariance matrix for the fixed effects.
 }
 \description{
 Variance-covariance of the fixed effects
+}
+\examples{
+\donttest{
+fit <- bqmm(distance ~ age + (1 | Subject), data = nlme::Orthodont,
+            tau = 0.5, chains = 1, iter = 300, refresh = 0, seed = 1)
+vcov(fit)
+}
 }

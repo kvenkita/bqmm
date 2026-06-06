@@ -32,9 +32,10 @@
 #'   `tau`).
 #' @export
 #' @examples
-#' \dontrun{
-#' fit <- bqmm(distance ~ age + (1 | Subject),
-#'             data = nlme::Orthodont, tau = c(0.1, 0.5, 0.9))
+#' \donttest{
+#' # A minimal fit; raise chains/iter for real analyses.
+#' fit <- bqmm(distance ~ age + (1 | Subject), data = nlme::Orthodont,
+#'             tau = 0.5, chains = 1, iter = 300, refresh = 0, seed = 1)
 #' summary(fit)
 #' }
 bqmm <- function(formula, data, tau = 0.5,

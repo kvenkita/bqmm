@@ -8,6 +8,12 @@
 #' @param x A `bqmm` fit.
 #' @param ... Unused.
 #' @return Invisibly, `x`.
+#' @examples
+#' \donttest{
+#' fit <- bqmm(distance ~ age + (1 | Subject), data = nlme::Orthodont,
+#'             tau = 0.5, chains = 1, iter = 300, refresh = 0, seed = 1)
+#' plot(fit)
+#' }
 #' @export
 plot.bqmm <- function(x, ...) {
   beta <- fixef(x)

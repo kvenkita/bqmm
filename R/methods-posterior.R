@@ -7,6 +7,12 @@
 #' @return A `draws_array` (from the `posterior` package) with tidy variable
 #'   names: `b_<name>` for fixed effects, `sd_<component>` for random-effect
 #'   SDs, and `sigma`.
+#' @examples
+#' \donttest{
+#' fit <- bqmm(distance ~ age + (1 | Subject), data = nlme::Orthodont,
+#'             tau = 0.5, chains = 1, iter = 300, refresh = 0, seed = 1)
+#' as_draws(fit)
+#' }
 #' @export
 as_draws.bqmm <- function(x, ...) {
   arr <- as.array(x$stanfit)        # iterations x chains x parameters
@@ -15,6 +21,18 @@ as_draws.bqmm <- function(x, ...) {
   d
 }
 
+#' Coerce a bqmm fit to a matrix of posterior draws
+#'
+#' @param x A `bqmm` fit.
+#' @param ... Unused.
+#' @return A matrix of posterior draws (draws in rows, parameters in columns),
+#'   using the raw Stan parameter names.
+#' @examples
+#' \donttest{
+#' fit <- bqmm(distance ~ age + (1 | Subject), data = nlme::Orthodont,
+#'             tau = 0.5, chains = 1, iter = 300, refresh = 0, seed = 1)
+#' dim(as.matrix(fit))
+#' }
 #' @export
 as.matrix.bqmm <- function(x, ...) {
   as.matrix(x$stanfit)

@@ -3,8 +3,7 @@
 # without re-running load_all() (which would recompile the Stan model).
 # NOT_CRAN=true so the end-to-end Stan-fit tests actually run.
 Sys.setenv(NOT_CRAN = "true")
-lib <- file.path(Sys.getenv("TEMP"), "bqmm_lib")
-library(bqmm, lib.loc = lib)
+library(bqmm)            # default library (where R CMD INSTALL now installs)
 library(testthat)
 
 pkg_dir <- "C:/Users/kyle/Documents/Projects/Personal/bayesian quantile mixed model/bqmm"

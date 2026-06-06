@@ -68,9 +68,10 @@ single \code{bqmm} fit; a vector fits each quantile independently and returns a
 \code{bqmm_multi} container.
 }
 \examples{
-\dontrun{
-fit <- bqmm(distance ~ age + (1 | Subject),
-            data = nlme::Orthodont, tau = c(0.1, 0.5, 0.9))
+\donttest{
+# A minimal fit; raise chains/iter for real analyses.
+fit <- bqmm(distance ~ age + (1 | Subject), data = nlme::Orthodont,
+            tau = 0.5, chains = 1, iter = 300, refresh = 0, seed = 1)
 summary(fit)
 }
 }

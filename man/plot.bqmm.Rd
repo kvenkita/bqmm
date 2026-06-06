@@ -18,3 +18,10 @@ Invisibly, \code{x}.
 Default plot shows fixed-effect posterior intervals. With \code{bayesplot}
 installed, richer MCMC plots are available via \code{\link[=as_draws]{as_draws()}}.
 }
+\examples{
+\donttest{
+fit <- bqmm(distance ~ age + (1 | Subject), data = nlme::Orthodont,
+            tau = 0.5, chains = 1, iter = 300, refresh = 0, seed = 1)
+plot(fit)
+}
+}

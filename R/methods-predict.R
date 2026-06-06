@@ -5,6 +5,12 @@
 #' @param object A `bqmm` fit.
 #' @param ... Unused.
 #' @return Numeric vector of fitted conditional quantiles.
+#' @examples
+#' \donttest{
+#' fit <- bqmm(distance ~ age + (1 | Subject), data = nlme::Orthodont,
+#'             tau = 0.5, chains = 1, iter = 300, refresh = 0, seed = 1)
+#' head(fitted(fit))
+#' }
 #' @export
 fitted.bqmm <- function(object, ...) {
   beta <- fixef(object)
@@ -16,6 +22,17 @@ fitted.bqmm <- function(object, ...) {
   mu
 }
 
+#' Residuals from a bqmm fit
+#'
+#' @param object A `bqmm` fit.
+#' @param ... Unused.
+#' @return Numeric vector of response-minus-fitted residuals.
+#' @examples
+#' \donttest{
+#' fit <- bqmm(distance ~ age + (1 | Subject), data = nlme::Orthodont,
+#'             tau = 0.5, chains = 1, iter = 300, refresh = 0, seed = 1)
+#' head(residuals(fit))
+#' }
 #' @export
 residuals.bqmm <- function(object, ...) {
   object$parsed$y - fitted(object)
@@ -31,6 +48,12 @@ residuals.bqmm <- function(object, ...) {
 #'   an effect for `bqmm_multi` objects (multiple quantiles).
 #' @param ... Unused.
 #' @return Numeric vector of predicted conditional quantiles.
+#' @examples
+#' \donttest{
+#' fit <- bqmm(distance ~ age + (1 | Subject), data = nlme::Orthodont,
+#'             tau = 0.5, chains = 1, iter = 300, refresh = 0, seed = 1)
+#' head(predict(fit, re.form = NA))
+#' }
 #' @export
 predict.bqmm <- function(object, newdata = NULL,
                          re.form = NULL,
@@ -72,12 +95,36 @@ bqmm_location_draws <- function(object, extra = character(0)) {
   list(loc = loc, extra = ex[extra])
 }
 
+#' Draws of the expected response (conditional tau-quantile)
+#'
+#' @param object A `bqmm` fit.
+#' @param ... Unused.
+#' @return An S x N matrix of posterior draws of the linear predictor, where S
+#'   is the number of posterior draws and N the number of observations.
+#' @examples
+#' \donttest{
+#' fit <- bqmm(distance ~ age + (1 | Subject), data = nlme::Orthodont,
+#'             tau = 0.5, chains = 1, iter = 300, refresh = 0, seed = 1)
+#' dim(posterior_epred(fit))
+#' }
 #' @export
 posterior_epred.bqmm <- function(object, ...) {
   # the conditional tau-quantile is the ALD location, so epred == location draws
   bqmm_location_draws(object)$loc
 }
 
+#' Draws from the posterior predictive distribution
+#'
+#' @param object A `bqmm` fit.
+#' @param ... Unused.
+#' @return An S x N matrix of posterior predictive draws of the response, where
+#'   S is the number of posterior draws and N the number of observations.
+#' @examples
+#' \donttest{
+#' fit <- bqmm(distance ~ age + (1 | Subject), data = nlme::Orthodont,
+#'             tau = 0.5, chains = 1, iter = 300, refresh = 0, seed = 1)
+#' dim(posterior_predict(fit))
+#' }
 #' @export
 posterior_predict.bqmm <- function(object, ...) {
   d <- bqmm_location_draws(object, extra = "sigma")
@@ -91,6 +138,18 @@ posterior_predict.bqmm <- function(object, ...) {
   yrep
 }
 
+#' Pointwise log-likelihood draws
+#'
+#' @param object A `bqmm` fit.
+#' @param ... Unused.
+#' @return An S x N matrix of pointwise log-likelihood values, suitable for use
+#'   with the `loo` package.
+#' @examples
+#' \donttest{
+#' fit <- bqmm(distance ~ age + (1 | Subject), data = nlme::Orthodont,
+#'             tau = 0.5, chains = 1, iter = 300, refresh = 0, seed = 1)
+#' dim(log_lik(fit))
+#' }
 #' @export
 log_lik.bqmm <- function(object, ...) {
   rstan::extract(object$stanfit, pars = "log_lik", permuted = TRUE)$log_lik

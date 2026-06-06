@@ -3,6 +3,8 @@
 ^SETUP\.md$
 ^REVIEW\.md$
 ^tools$
+^paper$
+^paper-notes$
 ^README\.Rmd$
 ^\.github$
 ^cran-comments\.md$

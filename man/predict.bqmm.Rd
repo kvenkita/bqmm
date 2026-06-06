@@ -31,3 +31,10 @@ Numeric vector of predicted conditional quantiles.
 \description{
 Predictions from a bqmm fit
 }
+\examples{
+\donttest{
+fit <- bqmm(distance ~ age + (1 | Subject), data = nlme::Orthodont,
+            tau = 0.5, chains = 1, iter = 300, refresh = 0, seed = 1)
+head(predict(fit, re.form = NA))
+}
+}

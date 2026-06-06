@@ -32,6 +32,19 @@ print.bqmm_multi <- function(x, ...) {
   invisible(x)
 }
 
+#' Coefficient-versus-tau matrix for a bqmm_multi fit
+#'
+#' @param object A `bqmm_multi` fit.
+#' @param ... Unused.
+#' @return A tau-by-coefficient matrix of posterior-median fixed effects, with
+#'   one row per quantile.
+#' @examples
+#' \donttest{
+#' fit <- bqmm(distance ~ age + (1 | Subject), data = nlme::Orthodont,
+#'             tau = c(0.25, 0.75), chains = 1, iter = 250,
+#'             refresh = 0, seed = 1)
+#' coef(fit)
+#' }
 #' @export
 coef.bqmm_multi <- function(object, ...) {
   # tau x fixed-coefficient matrix of posterior medians
@@ -41,11 +54,35 @@ coef.bqmm_multi <- function(object, ...) {
   mat
 }
 
+#' Summarize a bqmm_multi fit
+#'
+#' @param object A `bqmm_multi` fit.
+#' @param ... Passed to the per-quantile `summary()` method for each fit.
+#' @return A list of `summary.bqmm` objects, one per quantile.
+#' @examples
+#' \donttest{
+#' fit <- bqmm(distance ~ age + (1 | Subject), data = nlme::Orthodont,
+#'             tau = c(0.25, 0.75), chains = 1, iter = 250,
+#'             refresh = 0, seed = 1)
+#' summary(fit)
+#' }
 #' @export
 summary.bqmm_multi <- function(object, ...) {
   lapply(object$fits, summary, ...)
 }
 
+#' Plot coefficient-versus-tau paths for a bqmm_multi fit
+#'
+#' @param x A `bqmm_multi` fit.
+#' @param ... Unused.
+#' @return Invisibly, `x`.
+#' @examples
+#' \donttest{
+#' fit <- bqmm(distance ~ age + (1 | Subject), data = nlme::Orthodont,
+#'             tau = c(0.25, 0.75), chains = 1, iter = 250,
+#'             refresh = 0, seed = 1)
+#' plot(fit)
+#' }
 #' @export
 plot.bqmm_multi <- function(x, ...) {
   # coefficient-versus-tau paths (base graphics; bayesplot integration later)
