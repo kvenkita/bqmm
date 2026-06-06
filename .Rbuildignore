@@ -1,0 +1,16 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^SETUP\.md$
+^REVIEW\.md$
+^tools$
+^README\.Rmd$
+^\.github$
+^cran-comments\.md$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^vignettes/articles$
+^doc$
+^Meta$
+^\.gitignore$
+^LICENSE\.md$

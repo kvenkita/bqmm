@@ -1,0 +1,8 @@
+# Normalise all text to LF in the repo (critical: the configure scripts and
+# Makevars must be LF so the package builds on Linux/macOS CI and CRAN).
+* text=auto eol=lf
+
+# Binary assets
+*.png binary
+*.pdf binary
+*.ico binary

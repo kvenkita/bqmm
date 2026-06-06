@@ -1,0 +1,24 @@
+# R
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+*.Rproj
+
+# package build artefacts
+/src/*.o
+/src/*.so
+/src/*.dll
+/src/stanExports_*.cc
+/src/stanExports_*.h
+/src/RcppExports.cpp
+/R/stanmodels.R
+/doc
+/docs
+/Meta
+inst/doc
+..Rcheck/
+*.tar.gz
+
+# local, untracked working notes (paper planning, etc.)
+/paper-notes

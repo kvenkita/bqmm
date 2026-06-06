@@ -1,0 +1,59 @@
+url: https://kvenkita.github.io/bqmm/
+
+template:
+  bootstrap: 5
+  bslib:
+    primary: "#2c7fb8"
+
+navbar:
+  structure:
+    left:  [intro, primer, articles, reference, news]
+    right: [search, github]
+  components:
+    primer:
+      text: Primer
+      href: articles/bqmm-primer.html
+    articles:
+      text: Articles
+      menu:
+      - text: Valid inference under the ALD
+        href: articles/bqmm-inference.html
+      - text: Multilevel structure
+        href: articles/bqmm-multilevel.html
+      - text: Review & testing report
+        href: articles/bqmm-review.html
+
+home:
+  title: Bayesian Multilevel Quantile Regression
+  description: >
+    Fit Bayesian mixed-effects quantile regression with the asymmetric Laplace
+    working likelihood and Stan, with valid fixed-effect inference, correlated
+    random effects, and non-crossing quantiles.
+
+reference:
+- title: Model fitting
+  desc: The main entry point.
+  contents:
+  - bqmm
+- title: Priors and family
+  desc: Prior specification and the asymmetric Laplace family.
+  contents:
+  - bqmm_prior
+  - ald
+- title: Inference and uncertainty
+  desc: The Yang-Wang-He variance correction.
+  contents:
+  - vcov.bqmm
+- title: Predictions, methods, and plots
+  contents:
+  - predict.bqmm
+  - fitted.bqmm
+  - plot.bqmm
+  - as_draws.bqmm
+- title: Non-crossing
+  contents:
+  - rearrange_quantiles
+- title: Package and re-exports
+  contents:
+  - bqmm-package
+  - reexports

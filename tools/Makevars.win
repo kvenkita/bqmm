@@ -1,0 +1,11 @@
+# User-level Makevars for building bqmm (and any Stan package) on Windows.
+# The Stan-generated object file exceeds the COFF object-format limit
+# ("file too big"); -Wa,-mbig-obj switches the assembler to the big-object
+# format. CXX_STD = CXX17 in the package means the active flag variable is
+# CXX17FLAGS, but we set both for safety.
+#
+# Apply by pointing R_MAKEVARS_USER at this file during R CMD INSTALL, or copy
+# it to ~/.R/Makevars.win. See SETUP.md.
+CXX17FLAGS += -Wa,-mbig-obj
+CXX14FLAGS += -Wa,-mbig-obj
+CXXFLAGS += -Wa,-mbig-obj

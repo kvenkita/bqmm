@@ -1,0 +1,22 @@
+citHeader("To cite the bqmm package in publications, use:")
+
+bibentry(
+  bibtype  = "Manual",
+  title    = "{bqmm}: Bayesian Multilevel Quantile Regression",
+  author   = person("Kailas", "Venkitasubramanian"),
+  year     = "2026",
+  note     = "R package version 0.1.0",
+  url      = "https://github.com/kvenkita/bqmm",
+  textVersion = paste(
+    "Kailas Venkitasubramanian (2026).",
+    "bqmm: Bayesian Multilevel Quantile Regression.",
+    "R package version 0.1.0.",
+    "https://github.com/kvenkita/bqmm"
+  )
+)
+
+citFooter(
+  "The method builds on the asymmetric Laplace working likelihood ",
+  "(Yu & Moyeed, 2001) and the posterior-variance correction of ",
+  "Yang, Wang & He (2016); please cite those works where appropriate."
+)

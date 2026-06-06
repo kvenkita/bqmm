@@ -1,0 +1,44 @@
+  /* Asymmetric Laplace distribution (ALD) helpers for quantile regression.
+   *
+   * Parameterisation (Yu & Moyeed 2001): for quantile p in (0, 1),
+   *   f(y | mu, sigma, p) = p (1 - p) / sigma * exp( -rho_p( (y - mu) / sigma ) )
+   * where rho_p(u) = u * (p - I{u < 0}) is the check (pinball) loss.
+   *
+   * The density has a single non-differentiable kink at y == mu. Because the
+   * integrator lands there with probability zero, NUTS handles it in practice;
+   * this is the same likelihood brms exposes as asym_laplace().
+   */
+
+  // check loss rho_p(u)
+  real rho_p(real u, real p) {
+    return u * (p - (u < 0 ? 1.0 : 0.0));
+  }
+
+  // log density of a single observation under the ALD
+  real asym_laplace_lpdf_scalar(real y, real mu, real sigma, real p) {
+    real u = (y - mu) / sigma;
+    return log(p) + log1m(p) - log(sigma) - rho_p(u, p);
+  }
+
+  // vectorised log likelihood: y and mu are vectors, sigma and p scalars
+  real asym_laplace_lpdf(vector y, vector mu, real sigma, real p) {
+    int n = num_elements(y);
+    vector[n] u = (y - mu) / sigma;
+    real loss = 0;
+    for (i in 1:n) {
+      loss += rho_p(u[i], p);
+    }
+    return n * (log(p) + log1m(p) - log(sigma)) - loss;
+  }
+
+  // RNG via the location-scale (normal-exponential) mixture representation of
+  // the ALD (Kozumi & Kobayashi 2011): if w ~ Exp(1) and z ~ N(0,1) then
+  //   y = mu + sigma * (theta * w + tau_sd * sqrt(w) * z)
+  // is ALD(mu, sigma, p), with theta and tau_sd defined below.
+  real asym_laplace_rng(real mu, real sigma, real p) {
+    real theta  = (1 - 2 * p) / (p * (1 - p));
+    real tau_sd = sqrt(2 / (p * (1 - p)));
+    real w = exponential_rng(1);
+    real z = std_normal_rng();
+    return mu + sigma * (theta * w + tau_sd * sqrt(w) * z);
+  }

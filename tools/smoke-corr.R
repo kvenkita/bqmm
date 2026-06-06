@@ -1,0 +1,23 @@
+suppressMessages({ library(bqmm, lib.loc = file.path(Sys.getenv("TEMP"), "bqmm_lib2")); library(MASS) })
+cat("stan models:", paste(names(bqmm:::stanmodels), collapse = ", "), "\n")
+set.seed(3)
+G <- 25; npg <- 10; n <- G * npg
+g <- factor(rep(seq_len(G), each = npg)); x <- rnorm(n)
+Su <- matrix(c(0.8^2, 0.5*0.8*0.5, 0.5*0.8*0.5, 0.5^2), 2)
+U <- MASS::mvrnorm(G, c(0, 0), Su)
+y <- 1 + 2 * x + U[g, 1] + U[g, 2] * x + bqmm:::rald(n, 0, 1, 0.5)
+d <- data.frame(y = y, x = x, g = g)
+
+fit <- suppressWarnings(bqmm(y ~ x + (1 + x | g), d, tau = 0.5, cov = "unstructured",
+                            chains = 2, iter = 800, warmup = 400, seed = 3, refresh = 0))
+cat("cov:", fit$cov, "\n")
+cat("fixef:", round(fixef(fit), 3), "(true 1, 2)\n")
+vc <- VarCorr(fit)
+cat("VarCorr SDs:", round(vc, 3), "(true 0.8, 0.5)\n")
+cm <- attr(vc, "correlation")
+cat("correlation matrix:\n"); print(round(cm, 3))
+cat("ranef length:", length(ranef(fit)), "(expect M*L =", 2*G, ")\n")
+cat("posterior_epred dims:", paste(dim(posterior_epred(fit)), collapse = "x"), "\n")
+cat("summary (adjusted) runs:\n")
+print(summary(fit)$fixed)
+cat("\nSMOKE CORR OK\n")
