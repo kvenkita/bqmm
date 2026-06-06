@@ -1,0 +1,73 @@
+# Valid inference under the asymmetric Laplace likelihood
+
+## The problem
+
+The asymmetric Laplace distribution (ALD) is a convenient *working*
+likelihood for quantile regression: its mode-as-quantile and the
+check-loss connection make Bayesian computation straightforward (Yu and
+Moyeed, 2001). But it is misspecified for almost any real
+data-generating process, and a misspecified likelihood produces a
+posterior whose spread is the *wrong* asymptotic variance for the
+quantile-regression estimator. Naive credible intervals from such a
+posterior do not have correct frequentist coverage.
+
+## The correction
+
+Yang, Wang and He (2016) restore validity with a multiplicative sandwich
+that re-uses the posterior covariance as the “bread”:
+
+``` math
+V_\text{adj} = \Sigma_\text{post}\, G\, \Sigma_\text{post},
+```
+
+where $`\Sigma_\text{post}`$ is the posterior covariance of the fixed
+effects and $`G`$ is the meat — the variance of the asymmetric-Laplace
+working-likelihood score. With score
+$`s_i = \sigma^{-1} x_i\,(\tau - \mathbf{1}\{r_i<0\})`$ on the
+conditional residuals $`r_i`$, the meat is
+$`G = \sigma^{-2}\sum_g\big(\sum_{i\in g} x_i\psi_i\big)\big(\cdot\big)'`$
+(cluster-robust on the grouping factor; the default), or its
+independence analogue.
+
+Using $`\Sigma_\text{post}`$ as the bread is what makes this correct for
+a **mixed** model: the posterior covariance already encodes the
+multilevel pooling, so the adjustment keeps the random-effect
+contribution to fixed-effect uncertainty while fixing the misspecified
+ALD scale. Under correct specification
+$`G \approx \Sigma_\text{post}^{-1}`$ and the correction reduces to
+$`\approx \Sigma_\text{post}`$.
+
+``` r
+
+vcov(fit, adjusted = TRUE)    # corrected (multiplicative, cluster meat)
+vcov(fit, adjusted = FALSE)   # naive posterior covariance
+confint(fit, adjusted = TRUE)
+```
+
+## Why not the plain Koenker sandwich?
+
+The textbook fixed-effects sandwich
+$`\tau(1-\tau)D_1^{-1}D_0D_1^{-1}/n`$ (available internally as
+[`compute_ywh_sandwich()`](https://kvenkita.github.io/bqmm/reference/compute_ywh_sandwich.md)
+and validated against `quantreg`) is computed on residuals with the
+random effects removed, so it drops the between-cluster variance and
+**under-covers** the mixed-model fixed effects. A simulation bake-off
+(`tools/bakeoff.R`) confirmed this: across homoscedastic and
+heteroscedastic two-level designs at several quantiles, the Koenker form
+covered the fixed intercept at only 0.72–0.92, while the multiplicative
+form above covered at 0.95–1.00 — at or just above nominal everywhere.
+
+## Scope and caveats
+
+- Validity is claimed for the **fixed-effect block**. Variance
+  components retain their model-based posterior summaries.
+- The correction is mildly **conservative** (slightly over-nominal)
+  under weak misspecification — the price of guaranteed validity.
+- It is a large-sample / many-clusters argument; with very few clusters
+  the cluster-robust meat is noisy.
+
+## References
+
+Yang, Y., Wang, H. J. and He, X. (2016). Posterior inference in Bayesian
+quantile regression with asymmetric Laplace likelihood. *International
+Statistical Review*, 84(3), 327-344.
