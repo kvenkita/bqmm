@@ -40,16 +40,37 @@ reference:
   contents:
   - bqmm_prior
   - ald
+- title: Estimates and summaries
+  desc: Extract coefficients, random effects, and model summaries.
+  contents:
+  - summary.bqmm
+  - coef.bqmm
+  - fixef.bqmm
+  - ranef.bqmm
+  - VarCorr.bqmm
+  - nobs.bqmm
 - title: Inference and uncertainty
-  desc: The Yang-Wang-He variance correction.
+  desc: The Yang-Wang-He variance correction and credible intervals.
   contents:
   - vcov.bqmm
+  - confint.bqmm
 - title: Predictions, methods, and plots
   contents:
   - predict.bqmm
   - fitted.bqmm
+  - residuals.bqmm
+  - posterior_predict.bqmm
+  - posterior_epred.bqmm
+  - log_lik.bqmm
   - plot.bqmm
   - as_draws.bqmm
+  - as.matrix.bqmm
+- title: Multiple quantiles
+  desc: Methods for joint multi-quantile (`bqmm_multi`) fits.
+  contents:
+  - coef.bqmm_multi
+  - summary.bqmm_multi
+  - plot.bqmm_multi
 - title: Non-crossing
   contents:
   - rearrange_quantiles
