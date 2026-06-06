@@ -20,5 +20,6 @@ inst/doc
 ..Rcheck/
 *.tar.gz
 
-# local, untracked working notes (paper planning, etc.)
+# local-only working directories (not distributed)
 /paper-notes
+/paper
