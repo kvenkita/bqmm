@@ -1,16 +1,19 @@
-# Predictions from a bqmm fit
+# Confidence (credible) intervals for the fixed effects
 
-Predictions from a bqmm fit
+Wald-type intervals built from the posterior-median estimates and the
+(optionally misspecification-corrected) fixed-effect covariance.
 
 ## Usage
 
 ``` r
 # S3 method for class 'bqmm'
-predict(
+confint(
   object,
-  newdata = NULL,
-  re.form = NULL,
-  noncrossing = c("none", "rearrange"),
+  parm,
+  level = 0.95,
+  adjusted = TRUE,
+  method = c("ywh", "ij"),
+  cluster = TRUE,
   ...
 )
 ```
@@ -21,19 +24,28 @@ predict(
 
   A `bqmm` fit.
 
-- newdata:
+- parm:
 
-  Optional data frame; if omitted, training data are used.
+  Optional subset of coefficients (names or indices) to return.
 
-- re.form:
+- level:
 
-  `NULL` includes random effects (training data only); `NA` gives
-  population-level predictions.
+  Interval coverage (default `0.95`).
 
-- noncrossing:
+- adjusted:
 
-  One of `"none"` or `"rearrange"`. Rearrangement only has an effect for
-  `bqmm_multi` objects (multiple quantiles).
+  Logical; if `TRUE` (default) use the corrected covariance from
+  [`vcov.bqmm()`](https://kvenkita.github.io/bqmm/reference/vcov.bqmm.md),
+  otherwise the naive posterior covariance.
+
+- method:
+
+  Correction to use when `adjusted = TRUE`; see
+  [`vcov.bqmm()`](https://kvenkita.github.io/bqmm/reference/vcov.bqmm.md).
+
+- cluster:
+
+  Logical; use the cluster-robust form (default `TRUE`).
 
 - ...:
 
@@ -41,7 +53,7 @@ predict(
 
 ## Value
 
-Numeric vector of predicted conditional quantiles.
+A matrix with one row per coefficient and lower/upper interval columns.
 
 ## Examples
 
@@ -60,7 +72,9 @@ fit <- bqmm(distance ~ age + (1 | Subject), data = nlme::Orthodont,
 #> https://mc-stan.org/misc/warnings.html#tail-ess
 #> Warning: Some Rhat > 1.01; chains may not have converged.
 #> Warning: Some effective sample sizes < 100; consider more iterations.
-head(predict(fit, re.form = NA))
-#> [1] 22.29890 23.49976 24.70062 25.90149 22.29890 23.49976
+confint(fit)
+#>                   2.5%      97.5%
+#> (Intercept) 15.3176323 19.6732556
+#> age          0.4412432  0.7596201
 # }
 ```

@@ -1,18 +1,12 @@
-# Predictions from a bqmm fit
+# Residuals from a bqmm fit
 
-Predictions from a bqmm fit
+Residuals from a bqmm fit
 
 ## Usage
 
 ``` r
 # S3 method for class 'bqmm'
-predict(
-  object,
-  newdata = NULL,
-  re.form = NULL,
-  noncrossing = c("none", "rearrange"),
-  ...
-)
+residuals(object, ...)
 ```
 
 ## Arguments
@@ -21,27 +15,13 @@ predict(
 
   A `bqmm` fit.
 
-- newdata:
-
-  Optional data frame; if omitted, training data are used.
-
-- re.form:
-
-  `NULL` includes random effects (training data only); `NA` gives
-  population-level predictions.
-
-- noncrossing:
-
-  One of `"none"` or `"rearrange"`. Rearrangement only has an effect for
-  `bqmm_multi` objects (multiple quantiles).
-
 - ...:
 
   Unused.
 
 ## Value
 
-Numeric vector of predicted conditional quantiles.
+Numeric vector of response-minus-fitted residuals.
 
 ## Examples
 
@@ -60,7 +40,8 @@ fit <- bqmm(distance ~ age + (1 | Subject), data = nlme::Orthodont,
 #> https://mc-stan.org/misc/warnings.html#tail-ess
 #> Warning: Some Rhat > 1.01; chains may not have converged.
 #> Warning: Some effective sample sizes < 100; consider more iterations.
-head(predict(fit, re.form = NA))
-#> [1] 22.29890 23.49976 24.70062 25.90149 22.29890 23.49976
+head(residuals(fit))
+#> [1] -0.051654343 -2.252517623  0.546619097  1.345755817  0.001309249
+#> [6] -0.199554031
 # }
 ```

@@ -69,6 +69,68 @@ names: <code>b_&lt;name&gt;</code> for fixed effects, <code>sd_&lt;component&gt;
 SDs, and <code>sigma</code>.</p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="bqmm.html">bqmm</a></span><span class="op">(</span><span class="va">distance</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">Subject</span><span class="op">)</span>, data <span class="op">=</span> <span class="fu">nlme</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/nlme/man/Orthodont.html" class="external-link">Orthodont</a></span>,</span></span>
+<span class="r-in"><span>            tau <span class="op">=</span> <span class="fl">0.5</span>, chains <span class="op">=</span> <span class="fl">1</span>, iter <span class="op">=</span> <span class="fl">300</span>, refresh <span class="op">=</span> <span class="fl">0</span>, seed <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The largest R-hat is 1.07, indicating chains have not mixed.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Running the chains for more iterations may help. See</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> https://mc-stan.org/misc/warnings.html#r-hat</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Running the chains for more iterations may help. See</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> https://mc-stan.org/misc/warnings.html#bulk-ess</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Running the chains for more iterations may help. See</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> https://mc-stan.org/misc/warnings.html#tail-ess</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Some Rhat &gt; 1.01; chains may not have converged.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Some effective sample sizes &lt; 100; consider more iterations.</span>
+<span class="r-in"><span><span class="fu"><a href="https://mc-stan.org/posterior/reference/draws.html" class="external-link">as_draws</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # A draws_array: 150 iterations, 1 chains, and 275 variables</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> , , variable = b_(Intercept)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          chain</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iteration  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         1 17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         2 18</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         3 18</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         4 17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         5 17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> , , variable = b_age</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          chain</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iteration    1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         1 0.64</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         2 0.61</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         3 0.62</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         4 0.60</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         5 0.61</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> , , variable = sigma</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          chain</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iteration    1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         1 0.54</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         2 0.43</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         3 0.41</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         4 0.42</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         5 0.44</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> , , variable = z_std[1]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          chain</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iteration     1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         1 -0.67</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         2 -0.73</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         3 -0.94</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         4 -0.59</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         5 -0.53</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # ... with 145 more iterations, and 271 more variables</span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

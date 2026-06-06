@@ -1,39 +1,23 @@
-# Predictions from a bqmm fit
+# Random-effect standard deviations and correlations
 
-Predictions from a bqmm fit
+Random-effect standard deviations and correlations
 
 ## Usage
 
 ``` r
 # S3 method for class 'bqmm'
-predict(
-  object,
-  newdata = NULL,
-  re.form = NULL,
-  noncrossing = c("none", "rearrange"),
-  ...
-)
+VarCorr(x, sigma = 1, ...)
 ```
 
 ## Arguments
 
-- object:
+- x:
 
   A `bqmm` fit.
 
-- newdata:
+- sigma:
 
-  Optional data frame; if omitted, training data are used.
-
-- re.form:
-
-  `NULL` includes random effects (training data only); `NA` gives
-  population-level predictions.
-
-- noncrossing:
-
-  One of `"none"` or `"rearrange"`. Rearrangement only has an effect for
-  `bqmm_multi` objects (multiple quantiles).
+  Ignored; present for compatibility with the generic.
 
 - ...:
 
@@ -41,7 +25,10 @@ predict(
 
 ## Value
 
-Numeric vector of predicted conditional quantiles.
+A named numeric vector of posterior-median random-effect standard
+deviations (with a posterior-median correlation matrix attached as the
+`"correlation"` attribute for unstructured models), or `NULL` if the
+model has no random effects.
 
 ## Examples
 
@@ -60,7 +47,8 @@ fit <- bqmm(distance ~ age + (1 | Subject), data = nlme::Orthodont,
 #> https://mc-stan.org/misc/warnings.html#tail-ess
 #> Warning: Some Rhat > 1.01; chains may not have converged.
 #> Warning: Some effective sample sizes < 100; consider more iterations.
-head(predict(fit, re.form = NA))
-#> [1] 22.29890 23.49976 24.70062 25.90149 22.29890 23.49976
+VarCorr(fit)
+#> Subject : (Intercept) 
+#>              2.302257 
 # }
 ```

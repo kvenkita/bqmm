@@ -1,18 +1,12 @@
-# Predictions from a bqmm fit
+# Posterior-median random effects
 
-Predictions from a bqmm fit
+Posterior-median random effects
 
 ## Usage
 
 ``` r
 # S3 method for class 'bqmm'
-predict(
-  object,
-  newdata = NULL,
-  re.form = NULL,
-  noncrossing = c("none", "rearrange"),
-  ...
-)
+ranef(object, ...)
 ```
 
 ## Arguments
@@ -21,27 +15,15 @@ predict(
 
   A `bqmm` fit.
 
-- newdata:
-
-  Optional data frame; if omitted, training data are used.
-
-- re.form:
-
-  `NULL` includes random effects (training data only); `NA` gives
-  population-level predictions.
-
-- noncrossing:
-
-  One of `"none"` or `"rearrange"`. Rearrangement only has an effect for
-  `bqmm_multi` objects (multiple quantiles).
-
 - ...:
 
   Unused.
 
 ## Value
 
-Numeric vector of predicted conditional quantiles.
+A numeric vector of posterior-median random effects aligned with the
+columns of the random-effects design matrix `Z`, or `NULL` if the model
+has no random effects.
 
 ## Examples
 
@@ -60,7 +42,11 @@ fit <- bqmm(distance ~ age + (1 | Subject), data = nlme::Orthodont,
 #> https://mc-stan.org/misc/warnings.html#tail-ess
 #> Warning: Some Rhat > 1.01; chains may not have converged.
 #> Warning: Some effective sample sizes < 100; consider more iterations.
-head(predict(fit, re.form = NA))
-#> [1] 22.29890 23.49976 24.70062 25.90149 22.29890 23.49976
+ranef(fit)
+#>  [1] -1.07849003 -0.98944964 -0.80020631 -0.58516679 -0.22629122 -0.28227883
+#>  [7] -0.07279188 -0.07450183  1.02625922  0.48023175  0.46550229  1.24757566
+#> [13]  2.03819092  2.28031929  3.75275728  5.18810027 -5.40758736 -2.57188205
+#> [19] -2.67165211 -2.86997744 -1.19461286 -1.00111012 -0.98160755 -0.61369095
+#> [25] -0.09422922  0.85262409  2.11130471
 # }
 ```

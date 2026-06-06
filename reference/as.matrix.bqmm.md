@@ -1,39 +1,19 @@
-# Predictions from a bqmm fit
+# Coerce a bqmm fit to a matrix of posterior draws
 
-Predictions from a bqmm fit
+Coerce a bqmm fit to a matrix of posterior draws
 
 ## Usage
 
 ``` r
 # S3 method for class 'bqmm'
-predict(
-  object,
-  newdata = NULL,
-  re.form = NULL,
-  noncrossing = c("none", "rearrange"),
-  ...
-)
+as.matrix(x, ...)
 ```
 
 ## Arguments
 
-- object:
+- x:
 
   A `bqmm` fit.
-
-- newdata:
-
-  Optional data frame; if omitted, training data are used.
-
-- re.form:
-
-  `NULL` includes random effects (training data only); `NA` gives
-  population-level predictions.
-
-- noncrossing:
-
-  One of `"none"` or `"rearrange"`. Rearrangement only has an effect for
-  `bqmm_multi` objects (multiple quantiles).
 
 - ...:
 
@@ -41,7 +21,8 @@ predict(
 
 ## Value
 
-Numeric vector of predicted conditional quantiles.
+A matrix of posterior draws (draws in rows, parameters in columns),
+using the raw Stan parameter names.
 
 ## Examples
 
@@ -60,7 +41,7 @@ fit <- bqmm(distance ~ age + (1 | Subject), data = nlme::Orthodont,
 #> https://mc-stan.org/misc/warnings.html#tail-ess
 #> Warning: Some Rhat > 1.01; chains may not have converged.
 #> Warning: Some effective sample sizes < 100; consider more iterations.
-head(predict(fit, re.form = NA))
-#> [1] 22.29890 23.49976 24.70062 25.90149 22.29890 23.49976
+dim(as.matrix(fit))
+#> [1] 150 275
 # }
 ```

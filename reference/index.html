@@ -78,9 +78,60 @@
         </dt>
         <dd>The asymmetric Laplace family for quantile regression</dd>
       </dl></div><div class="section level2">
+      <h2 id="estimates-and-summaries">Estimates and summaries<a class="anchor" aria-label="anchor" href="#estimates-and-summaries"></a></h2>
+
+      <div class="section-desc"><p>Extract coefficients, random effects, and model summaries.</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="summary.bqmm.html">summary(<i>&lt;bqmm&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Summarize a bqmm fit</dd>
+
+        <dt>
+
+          <code><a href="coef.bqmm.html">coef(<i>&lt;bqmm&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Extract model coefficients</dd>
+
+        <dt>
+
+          <code><a href="fixef.bqmm.html">fixef(<i>&lt;bqmm&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Posterior-median fixed effects</dd>
+
+        <dt>
+
+          <code><a href="ranef.bqmm.html">ranef(<i>&lt;bqmm&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Posterior-median random effects</dd>
+
+        <dt>
+
+          <code><a href="VarCorr.bqmm.html">VarCorr(<i>&lt;bqmm&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Random-effect standard deviations and correlations</dd>
+
+        <dt>
+
+          <code><a href="nobs.bqmm.html">nobs(<i>&lt;bqmm&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Number of observations used in the fit</dd>
+      </dl></div><div class="section level2">
       <h2 id="inference-and-uncertainty">Inference and uncertainty<a class="anchor" aria-label="anchor" href="#inference-and-uncertainty"></a></h2>
 
-      <div class="section-desc"><p>The Yang-Wang-He variance correction.</p></div>
+      <div class="section-desc"><p>The Yang-Wang-He variance correction and credible intervals.</p></div>
 
       <dl></dl></div><div class="section level2">
 
@@ -93,6 +144,13 @@
 
         </dt>
         <dd>Variance-covariance of the fixed effects</dd>
+
+        <dt>
+
+          <code><a href="confint.bqmm.html">confint(<i>&lt;bqmm&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Confidence (credible) intervals for the fixed effects</dd>
       </dl></div><div class="section level2">
       <h2 id="predictions-methods-and-plots">Predictions, methods, and plots<a class="anchor" aria-label="anchor" href="#predictions-methods-and-plots"></a></h2>
 
@@ -119,6 +177,34 @@
 
         <dt>
 
+          <code><a href="residuals.bqmm.html">residuals(<i>&lt;bqmm&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Residuals from a bqmm fit</dd>
+
+        <dt>
+
+          <code><a href="posterior_predict.bqmm.html">posterior_predict(<i>&lt;bqmm&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Draws from the posterior predictive distribution</dd>
+
+        <dt>
+
+          <code><a href="posterior_epred.bqmm.html">posterior_epred(<i>&lt;bqmm&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Draws of the expected response (conditional tau-quantile)</dd>
+
+        <dt>
+
+          <code><a href="log_lik.bqmm.html">log_lik(<i>&lt;bqmm&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Pointwise log-likelihood draws</dd>
+
+        <dt>
+
           <code><a href="plot.bqmm.html">plot(<i>&lt;bqmm&gt;</i>)</a></code>
 
         </dt>
@@ -130,6 +216,43 @@
 
         </dt>
         <dd>Convert a bqmm fit to a posterior draws object</dd>
+
+        <dt>
+
+          <code><a href="as.matrix.bqmm.html">as.matrix(<i>&lt;bqmm&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Coerce a bqmm fit to a matrix of posterior draws</dd>
+      </dl></div><div class="section level2">
+      <h2 id="multiple-quantiles">Multiple quantiles<a class="anchor" aria-label="anchor" href="#multiple-quantiles"></a></h2>
+
+      <div class="section-desc"><p>Methods for joint multi-quantile (<code>bqmm_multi</code>) fits.</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="coef.bqmm_multi.html">coef(<i>&lt;bqmm_multi&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Coefficient-versus-tau matrix for a bqmm_multi fit</dd>
+
+        <dt>
+
+          <code><a href="summary.bqmm_multi.html">summary(<i>&lt;bqmm_multi&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Summarize a bqmm_multi fit</dd>
+
+        <dt>
+
+          <code><a href="plot.bqmm_multi.html">plot(<i>&lt;bqmm_multi&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Plot coefficient-versus-tau paths for a bqmm_multi fit</dd>
       </dl></div><div class="section level2">
       <h2 id="non-crossing">Non-crossing<a class="anchor" aria-label="anchor" href="#non-crossing"></a></h2>
 

@@ -1,18 +1,12 @@
-# Predictions from a bqmm fit
+# Pointwise log-likelihood draws
 
-Predictions from a bqmm fit
+Pointwise log-likelihood draws
 
 ## Usage
 
 ``` r
 # S3 method for class 'bqmm'
-predict(
-  object,
-  newdata = NULL,
-  re.form = NULL,
-  noncrossing = c("none", "rearrange"),
-  ...
-)
+log_lik(object, ...)
 ```
 
 ## Arguments
@@ -21,27 +15,14 @@ predict(
 
   A `bqmm` fit.
 
-- newdata:
-
-  Optional data frame; if omitted, training data are used.
-
-- re.form:
-
-  `NULL` includes random effects (training data only); `NA` gives
-  population-level predictions.
-
-- noncrossing:
-
-  One of `"none"` or `"rearrange"`. Rearrangement only has an effect for
-  `bqmm_multi` objects (multiple quantiles).
-
 - ...:
 
   Unused.
 
 ## Value
 
-Numeric vector of predicted conditional quantiles.
+An S x N matrix of pointwise log-likelihood values, suitable for use
+with the `loo` package.
 
 ## Examples
 
@@ -60,7 +41,7 @@ fit <- bqmm(distance ~ age + (1 | Subject), data = nlme::Orthodont,
 #> https://mc-stan.org/misc/warnings.html#tail-ess
 #> Warning: Some Rhat > 1.01; chains may not have converged.
 #> Warning: Some effective sample sizes < 100; consider more iterations.
-head(predict(fit, re.form = NA))
-#> [1] 22.29890 23.49976 24.70062 25.90149 22.29890 23.49976
+dim(log_lik(fit))
+#> [1] 150 108
 # }
 ```
